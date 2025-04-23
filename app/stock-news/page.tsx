@@ -45,8 +45,8 @@ export default function Home() {
           className="rounded-lg shadow-md"
           width="100%"
           height="470"
-          src="https://www.youtube.com/embed/Yg1lKUq-8bc?autoplay=1&mute=1&cc_load_policy=1"
-          title="Top Stories - Yahoo Finance"
+          src="https://www.youtube.com/embed/f39oHo6vFLg?autoplay=1&mute=1&cc_load_policy=1"
+          title="Bloomberg Live: Business, Finance, Earnings & Investment News"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
