@@ -24,7 +24,7 @@ type TradeTableProps = {
 };
 
 export const TradeTable = ({ trades }: TradeTableProps) => {
-  console.log(`TradeTable  trades`, trades);
+  // console.log(`TradeTable  trades`, trades);
 
   return (
     <div className="p-4 overflow-x-auto">
