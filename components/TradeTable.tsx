@@ -1,5 +1,6 @@
 'use client';
 
+import { toFixedDown } from '@/app/utils/utils';
 import React, { useState } from 'react';
 
 type Prediction = {
@@ -66,8 +67,8 @@ export const TradeTable = ({ trades }: TradeTableProps) => {
                 {trade.side}
               </span>
             </div>
-            <p><strong>Entry:</strong> {trade.entryPrice}</p>
-            <p><strong>Mark:</strong> {trade.markPrice}</p>
+            <p><strong>Entry:</strong> {toFixedDown(trade.entryPrice, 5)}</p>
+            <p><strong>Mark:</strong> {toFixedDown(trade.markPrice, 5)}</p>
             <p><strong>Volume:</strong> {trade.volume}</p>
             <p><strong>Profit:</strong> {trade.profit.amount} USDT</p>
             <p><strong>Profit %:</strong> {trade.profit.percent}%</p>
@@ -92,10 +93,10 @@ export const TradeTable = ({ trades }: TradeTableProps) => {
             </div>
 
             <div className="text-sm text-gray-800 dark:text-gray-200 mb-4 space-y-1">
-              <p><strong>Entry Price:</strong> {modalData.entryPrice}</p>
-              <p><strong>Mark Price:</strong> {modalData.markPrice}</p>
+              <p><strong>Entry Price:</strong> {toFixedDown(modalData.entryPrice, 5)}</p>
+              <p><strong>Mark Price:</strong> {toFixedDown(modalData.markPrice, 5)}</p>
               <p><strong>Volume:</strong> {modalData.volume}</p>
-              <p><strong>Cost:</strong> {modalData.cost}</p>
+              <p><strong>Cost:</strong> {toFixedDown(modalData.cost, 2)}</p>
               <p><strong>Profit:</strong> {modalData.profit.amount} USDT</p>
               <p><strong>Profit %:</strong> {modalData.profit.percent}%</p>
             </div>
@@ -106,11 +107,11 @@ export const TradeTable = ({ trades }: TradeTableProps) => {
                 <tr>
                   <th className="border px-2 py-1">Move</th>
                   <th className="border px-2 py-1">Expected Price</th>
-                  <th className="border px-2 py-1">Position</th>
+                  <th className="border px-2 py-1">$10x</th>
                   <th className="border px-2 py-1">Wallet</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
                 {modalData.predictions!.map((pred, i) => (
                   <tr key={i}>
                     <td className="border px-2 py-1">{pred.move}</td>
