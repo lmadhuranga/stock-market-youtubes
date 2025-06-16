@@ -1,7 +1,8 @@
 const fetchData = () => {
   console.log('process.env.NEXT_PUBLIC_SITE_URL', process.env.NEXT_PUBLIC_SITE_URL)
   return fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/crypto`, {
-    next: { revalidate: 60 },
+    next: { revalidate: 10 }, // Revalidate every 10 seconds
+    cache: "no-store", // Disable caching for this request
   })
     .then((res) => res.json())
     .then((data) => {
