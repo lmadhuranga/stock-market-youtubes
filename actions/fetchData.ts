@@ -1,5 +1,6 @@
 const fetchData = () => {
-  return fetch("http://localhost:3001/api/crypto", {
+  console.log('process.env.NEXT_PUBLIC_SITE_URL', process.env.NEXT_PUBLIC_SITE_URL)
+  return fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/crypto`, {
     next: { revalidate: 60 },
   })
     .then((res) => res.json())
