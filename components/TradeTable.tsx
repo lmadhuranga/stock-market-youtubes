@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 type Prediction = {
   move: string;
@@ -41,53 +41,55 @@ export const TradeTable = ({ trades }: TradeTableProps) => {
   };
 
   return (
-    <div className="p-4 overflow-x-auto">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">Trades</h2>
+    <div className="p-4">
+      <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">Trade Summary</h2>
 
-      <table className="w-full text-sm border border-gray-300 dark:border-gray-700">
-        <thead className="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
-          <tr>
-            <th className="border px-3 py-2">#</th>
-            <th className="border px-3 py-2">Symbol</th>
-            <th className="border px-3 py-2">Side</th>
-            <th className="border px-3 py-2">Entry</th>
-            <th className="border px-3 py-2">Mark</th>
-            <th className="border px-3 py-2">Volume</th>
-            <th className="border px-3 py-2">Cost</th>
-            <th className="border px-3 py-2">Profit</th>
-            <th className="border px-3 py-2">%</th>
-          </tr>
-        </thead>
-        <tbody className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-          {trades.map((trade, index) => (
-            <tr
-              key={index}
-              onClick={() => openModal(trade)}
-              className={`border-t cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 ${
-                trade.predictions && trade.predictions.length > 0 ? "" : "pointer-events-none opacity-50"
-              }`}
-            >
-              <td className="px-3 py-2">{index + 1}</td>
-              <td className="px-3 py-2">{trade.symbol}</td>
-              <td className="px-3 py-2">{trade.side}</td>
-              <td className="px-3 py-2">{trade.entryPrice}</td>
-              <td className="px-3 py-2">{trade.markPrice}</td>
-              <td className="px-3 py-2">{trade.volume}</td>
-              <td className="px-3 py-2">{trade.cost}</td>
-              <td className="px-3 py-2">{trade.profit.amount}</td>
-              <td className="px-3 py-2">{trade.profit.percent}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {/* Card Layout */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {trades.map((trade, index) => (
+          <div
+            key={index}
+            onClick={() => openModal(trade)}
+            className={`border rounded-xl p-4 shadow hover:shadow-md transition cursor-pointer bg-white dark:bg-gray-800 dark:text-white ${
+              trade.predictions?.length ? '' : 'opacity-50 pointer-events-none'
+            }`}
+          >
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-lg font-semibold">{trade.symbol}</span>
+              <span
+                className={`text-xs px-2 py-1 rounded ${
+                  trade.side === 'LONG'
+                    ? 'bg-green-100 text-green-700'
+                    : 'bg-red-100 text-red-700'
+                }`}
+              >
+                {trade.side}
+              </span>
+            </div>
+            <p><strong>Entry:</strong> {trade.entryPrice}</p>
+            <p><strong>Mark:</strong> {trade.markPrice}</p>
+            <p><strong>Volume:</strong> {trade.volume}</p>
+            <p><strong>Profit:</strong> {trade.profit.amount} USDT</p>
+            <p><strong>Profit %:</strong> {trade.profit.percent}%</p>
+          </div>
+        ))}
+      </div>
 
-      {/* Modal for predictions */}
+      {/* Modal */}
       {modalData && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
-          <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg max-w-md w-full p-6">
-            <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
-              Trade Details: {modalData.symbol} ({modalData.side})
-            </h3>
+          <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg max-w-lg w-full p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                Predictions for {modalData.symbol} ({modalData.side})
+              </h3>
+              <button
+                onClick={closeModal}
+                className="text-gray-500 hover:text-gray-900 dark:hover:text-white text-lg"
+              >
+                ✕
+              </button>
+            </div>
 
             <div className="text-sm text-gray-800 dark:text-gray-200 mb-4 space-y-1">
               <p><strong>Entry Price:</strong> {modalData.entryPrice}</p>
@@ -108,7 +110,7 @@ export const TradeTable = ({ trades }: TradeTableProps) => {
                   <th className="border px-2 py-1">Wallet</th>
                 </tr>
               </thead>
-              <tbody className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+              <tbody>
                 {modalData.predictions!.map((pred, i) => (
                   <tr key={i}>
                     <td className="border px-2 py-1">{pred.move}</td>
