@@ -5,6 +5,7 @@ const fetchData = () => {
     next: {
       revalidate: 0, // Disable revalidation for this request
     },
+    method: "GET", // Use GET method to fetch data
     cache: "no-store", // Disable caching for this request
   })
     .then((res) => res.json())

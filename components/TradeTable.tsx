@@ -41,46 +41,39 @@ export const TradeTable = ({ trades }: TradeTableProps) => {
     setModalData(null);
   };
 
+  const getProfitColor = (amount: number) =>
+    amount >= 0
+      ? 'text-emerald-600 dark:text-emerald-400'
+      : 'text-rose-600 dark:text-rose-400';
+
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">Trade Summary</h2>
+      <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Trade Summary</h2>
 
-      {/* Card Layout */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {trades.map((trade, index) => (
           <div
             key={index}
             onClick={() => openModal(trade)}
-            className={`border rounded-xl p-4 shadow hover:shadow-md transition cursor-pointer bg-white dark:bg-gray-800 dark:text-white ${trade.predictions?.length ? '' : 'opacity-50 pointer-events-none'
+            className={`rounded-xl p-4 transition cursor-pointer shadow-md hover:shadow-lg border dark:border-gray-700 bg-gray-50 dark:bg-gray-800 ${trade.predictions?.length ? '' : 'opacity-50 pointer-events-none'
               }`}
           >
             <div className="flex justify-between items-center mb-2">
-              <span className="text-lg font-semibold">{trade.symbol}</span>
+              <span className="text-lg font-semibold text-gray-800 dark:text-gray-100">{trade.symbol}</span>
               <span
-                className={`text-xs px-2 py-1 rounded ${trade.side === 'LONG'
-                  ? 'bg-green-100 text-green-700'
-                  : 'bg-red-100 text-red-700'
+                className={`text-xs px-2 py-1 rounded-full font-semibold ${trade.side === 'LONG'
+                    ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-700 dark:text-white'
+                    : 'bg-rose-100 text-rose-700 dark:bg-rose-700 dark:text-white'
                   }`}
               >
                 {trade.side}
               </span>
             </div>
-            <p><strong>Entry:</strong> {toFixedDown(trade.entryPrice, 5)}</p>
-            <p><strong>Mark:</strong> {toFixedDown(trade.markPrice, 5)}</p>
-            <p><strong>Volume:</strong> {trade.volume}</p>
-            <p>
+            <p className="text-gray-900 dark:text-white"><strong>Entry:</strong> { toFixedDown(trade.entryPrice, 5)}</p>
+            <p className='text-gray-900 dark:text-white'><strong>Mark:</strong> { toFixedDown(trade.markPrice, 5)}</p>
+            <p className='text-gray-900 dark:text-white'><strong>Cost:</strong> { toFixedDown(trade.cost, 5)}</p>
+            <p className={getProfitColor(trade.profit.amount)}>
               <strong>Profit:</strong> {trade.profit.amount} USDT ({trade.profit.percent}%)
-              {trade.profit.amount > 0 && (
-                <span className="ml-2 text-green-600 dark:text-green-400" title="Profit bonus">
-                  {trade.profit.percent > 10
-                    ? '💰💰💰'
-                    : trade.profit.percent > 5
-                      ? '💰💰'
-                      : trade.profit.percent > 1
-                        ? '💰'
-                        : '💵'}
-                </span>
-              )}
             </p>
           </div>
         ))}
@@ -103,10 +96,10 @@ export const TradeTable = ({ trades }: TradeTableProps) => {
             </div>
 
             <div className="text-sm text-gray-800 dark:text-gray-200 mb-4 space-y-1">
-              <p><strong>Entry Price:</strong> {toFixedDown(modalData.entryPrice, 5)}</p>
-              <p><strong>Mark Price:</strong> {toFixedDown(modalData.markPrice, 5)}</p>
+              <p><strong>Entry Price:</strong> {modalData.entryPrice}</p>
+              <p><strong>Mark Price:</strong> {modalData.markPrice}</p>
               <p><strong>Volume:</strong> {modalData.volume}</p>
-              <p><strong>Cost:</strong> {toFixedDown(modalData.cost, 2)}</p>
+              <p><strong>Cost:</strong> {modalData.cost}</p>
               <p><strong>Profit:</strong> {modalData.profit.amount} USDT</p>
               <p><strong>Profit %:</strong> {modalData.profit.percent}%</p>
             </div>
@@ -117,7 +110,7 @@ export const TradeTable = ({ trades }: TradeTableProps) => {
                 <tr>
                   <th className="border px-2 py-1">Move</th>
                   <th className="border px-2 py-1">Expected Price</th>
-                  <th className="border px-2 py-1">$10x</th>
+                  <th className="border px-2 py-1">Position</th>
                   <th className="border px-2 py-1">Wallet</th>
                 </tr>
               </thead>
