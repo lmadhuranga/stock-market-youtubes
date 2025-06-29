@@ -29,6 +29,7 @@ type TradeTableProps = {
 };
 
 export const TradeTable = ({ trades }: TradeTableProps) => {
+  console.log(`trades`,trades);
   const [modalData, setModalData] = useState<Trade | null>(null);
 
   const openModal = (trade: Trade) => {
@@ -51,7 +52,7 @@ export const TradeTable = ({ trades }: TradeTableProps) => {
       <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Trade Summary</h2>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {trades.map((trade, index) => (
+        {trades.sort((a, b) => b.profit.amount - a.profit.amount).map((trade, index) => (
           <div
             key={index}
             onClick={() => openModal(trade)}
